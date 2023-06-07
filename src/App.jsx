@@ -1,21 +1,14 @@
-import * as React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Home from './pages/Home'
-import DummyPage from './pages/DummyPage'
+import * as React from "react";
+import Header from "./components/Header";
+import Timer from "./components/Timer";
 
 const App = () => {
   return (
     <>
-    <Header />
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/dummy" element={<DummyPage />}></Route>
-    </Routes>
-    <Footer />
-  </>
-  )
-}
+      <Header />
+      <Timer />
+    </>
+  );
+};
 
-export default App
+export default App;
