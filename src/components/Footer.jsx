@@ -1,15 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const Footer = () => {
-  return (
-    <>
-    <div class="sticky-bottom bg-light text-center text-lg-start">
-      <div class="text-center p-3">
-        © {new Date().getFullYear()} Acme INC.
-      </div>
-    </div>
-    </>
-  )
-}
+    return (
+        <>
+            <div className="sticky-bottom text-center text-lg-start">
+                <div className="text-center p-3 text-white">© {new Date().getFullYear()} Katja Kontio.</div>
+            </div>
+        </>
+    );
+};
 
-export default Footer
+export default Footer;
