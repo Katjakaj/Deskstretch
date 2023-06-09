@@ -3,8 +3,8 @@ import "../scss/components/timer.scss";
 import Popup from "./Popup";
 
 const Timer = () => {
-    const [time, setTime] = useState(30); // 5 minutes in seconds
-    const [selectedTime, setSelectedTime] = useState({ hours: "", minutes: 5 });
+    const [time, setTime] = useState(10); // 5 minutes in seconds
+    const [selectedTime, setSelectedTime] = useState({ hours: "", minutes: 1 });
     const [isActive, setIsActive] = useState(false);
     const [showPopup, setShowPopup] = useState(true);
 
@@ -75,7 +75,6 @@ const Timer = () => {
 
     const handlePopupClose = () => {
         setShowPopup(false);
-        // Perform any other actions needed when the popup is closed
     };
 
     return (
@@ -111,7 +110,7 @@ const Timer = () => {
                     <div className="col-12 mt-2 d-flex justify-content-center mt-4">
                         <div className="mx-1 form-floating">
                             <input
-                                class="form-control"
+                                className="form-control"
                                 type="number"
                                 min="0"
                                 name="hours"
@@ -123,7 +122,7 @@ const Timer = () => {
                         </div>
                         <div className="mx-1 form-floating">
                             <input
-                                class="form-control"
+                                className="form-control"
                                 type="number"
                                 min="0"
                                 name="minutes"
@@ -135,7 +134,8 @@ const Timer = () => {
                         </div>
                     </div>
                 </div>
-                {showPopup && <Popup title="Paus!" message="Övning nr 1" onClose={handlePopupClose} />}
+
+                {showPopup && <Popup onClose={handlePopupClose} />}
             </div>
         </div>
     );
