@@ -1,15 +1,18 @@
 import * as React from "react";
+import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Timer from "./components/Timer";
+import Exercises from "./components/Exercises";
 import Footer from "./components/Footer";
-import Popup from "./components/Popup";
 
 const App = () => {
     return (
         <>
             <Header />
-            <Timer />
-            <Footer />
+            <Routes>
+                <Route path="/timer" element={<Timer />}></Route>
+                <Route path="/exercises" element={<Exercises />}></Route>
+            </Routes>
         </>
     );
 };

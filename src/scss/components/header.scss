@@ -1,3 +1,22 @@
 .logo {
     width: 140px;
 }
+
+.menu-container {
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+    padding-bottom: 5px;
+    .menu-text {
+        font-size: 16px;
+    }
+}
+
+.offcanvas {
+    background-color: rgb(32, 30, 44) !important;
+    color: #fff !important;
+}
+
+.nav-link {
+    text-transform: uppercase;
+    font-weight: 600 !important;
+}

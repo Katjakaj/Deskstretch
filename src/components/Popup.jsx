@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import data from "../data/exercises";
 
 const Popup = ({ onClose }) => {
-    const [showPopup, setShowPopup] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
 
     const exercises = data;
     const randomExerciseIndex = Math.floor(Math.random() * exercises.length);
