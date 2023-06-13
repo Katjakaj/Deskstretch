@@ -1,10 +1,17 @@
 .modal-content {
     background-color: rgb(32, 30, 44) !important;
     color: #fff !important;
-}
 
-.modal-header {
-    .close {
-        color: #fff !important;
+    .modal-header {
+        padding: 1rem 1.5rem !important;
+        border: 0 !important;
+        .close.red-close-button {
+            color: #fff !important;
+            font-size: 2rem;
+        }
+    }
+    .modal-body {
+        padding: 3rem 1.5rem !important;
+        padding-top: 0 !important;
     }
 }
