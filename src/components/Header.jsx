@@ -19,8 +19,8 @@ const Header = () => {
 
     return (
         <>
-            <div className="header position-absolute w-100 mt-4">
-                <Navbar bg="" expand="lg">
+            <div className="header w-100 mt-4">
+                <Navbar bg="" expand="">
                     <Container className="justify-content-center">
                         <div className="row">
                             <div className="col-12 d-flex justify-content-center pb-4">
@@ -35,22 +35,30 @@ const Header = () => {
                                     className={showMenu ? "navbar-toggler white" : "navbar-toggler"}
                                 >
                                     <div className="menu-container">
-                                        <span className="text-white menu-text">Menu</span>
+                                        <a className="text-white menu-text">Menu</a>
                                     </div>
                                 </Navbar.Toggle>
                             </div>
                         </div>
-                        <Offcanvas show={showMenu} onHide={closeMenu} placement="top" className="h-50">
-                            <Offcanvas.Header className="mx-auto mt-3" closeButton>
+                        <Offcanvas show={showMenu} onHide={closeMenu} placement="top">
+                            <Offcanvas.Header className="mx-auto mt-3">
                                 <Offcanvas.Title></Offcanvas.Title>
+                                <div className="close-container">
+                                    <a className="close" onClick={closeMenu}>
+                                        Close
+                                    </a>
+                                </div>
                             </Offcanvas.Header>
-                            <Offcanvas.Body className="d-flex flex-column align-items-center justify-content-center">
+                            <Offcanvas.Body className="d-flex flex-column align-items-center justify-content-start">
                                 <Nav className="flex-column text-center">
                                     <Link className="nav-link" to="/timer" onClick={closeMenu}>
                                         Timer
                                     </Link>
                                     <Link className="nav-link" to="/exercises" onClick={closeMenu}>
-                                        Excercises
+                                        Exercises
+                                    </Link>
+                                    <Link className="nav-link" to="/exercises" onClick={closeMenu}>
+                                        LOG OUT
                                     </Link>
                                 </Nav>
                             </Offcanvas.Body>

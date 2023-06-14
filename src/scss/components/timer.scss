@@ -1,6 +1,5 @@
 body {
     background-color: rgb(32, 30, 44) !important;
-    overflow-y: hidden !important;
 }
 
 .timer {
@@ -10,7 +9,7 @@ body {
     }
 
     .timer-container {
-        height: 100vh;
+        height: 70vh;
     }
 
     a {

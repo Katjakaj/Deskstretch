@@ -3,11 +3,16 @@
 }
 
 .menu-container {
-    border-bottom: 2px solid white;
-    border-top: 2px solid white;
+    border-bottom: 2px solid #ebb218;
+    border-top: 2px solid #ebb218;
     padding-bottom: 5px;
+    padding-top: 5px;
     .menu-text {
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
         font-size: 16px;
+        cursor: pointer;
     }
 }
 
@@ -19,4 +24,18 @@
 .nav-link {
     text-transform: uppercase;
     font-weight: 600 !important;
+}
+
+.close-container {
+    border-bottom: 2px solid #ebb218;
+    border-top: 2px solid #ebb218;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    .close {
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 16px;
+        cursor: pointer;
+    }
 }
