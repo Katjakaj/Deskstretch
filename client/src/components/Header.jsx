@@ -24,7 +24,7 @@ const Header = () => {
                     <Container className="justify-content-center">
                         <div className="row">
                             <div className="col-12 d-flex justify-content-center pb-4">
-                                <Link to="/">
+                                <Link to="/timer">
                                     <img className="logo" src={logo} alt="Logo" />
                                 </Link>
                             </div>
@@ -57,8 +57,8 @@ const Header = () => {
                                     <Link className="nav-link" to="/exercises" onClick={closeMenu}>
                                         Exercises
                                     </Link>
-                                    <Link className="nav-link" to="/exercises" onClick={closeMenu}>
-                                        LOG OUT
+                                    <Link className="nav-link" to="/login" onClick={closeMenu}>
+                                        Log in
                                     </Link>
                                 </Nav>
                             </Offcanvas.Body>

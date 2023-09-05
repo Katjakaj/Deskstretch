@@ -1,0 +1,39 @@
+.login {
+    height: 70vh;
+    .login-container {
+        background-color: $backgroundLight;
+        border-radius: 10px;
+        padding-top: 2.5rem;
+        padding-bottom: 2rem;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 0.6rem 0em;
+        border: 0;
+        border-bottom: 1px solid white;
+        background: transparent;
+        color: #fff;
+    }
+    ::placeholder {
+        color: #fff;
+        opacity: 1;
+    }
+
+    .btn-login {
+        background-color: #ebb218;
+        color: rgb(32, 30, 44) !important;
+        border: 2px solid #ebb218;
+        padding: 0.65rem 2.5rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        border-radius: 5rem;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-password {
+        font-size: 14px;
+    }
+}

@@ -4,8 +4,8 @@
 @import "./bootstrap/scss/variables";
 
 // Common
+@import "./common/variables.scss";
 @import "./common/typo.scss";
-
 // Layouts
 
 // Components
@@ -13,6 +13,7 @@
 @import "./components/timer.scss";
 @import "./components/popup.scss";
 @import "./components/exercises.scss";
+@import "./components/login.scss";
 
 // Bootstrap
 @import "./bootstrap/scss/bootstrap.scss";

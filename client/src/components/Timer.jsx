@@ -6,7 +6,7 @@ const Timer = () => {
     const [time, setTime] = useState(10); // 5 minutes in seconds
     const [selectedTime, setSelectedTime] = useState({ hours: "", minutes: "" });
     const [isActive, setIsActive] = useState(false);
-    const [showPopup, setShowPopup] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         let interval = null;
@@ -145,8 +145,7 @@ const Timer = () => {
                         </div>
                     </div>
                 </div>
-
-                {showPopup && <Popup onClose={handlePopupClose} />}
+                {showPopup && isActive && <Popup onClose={handlePopupClose} />}
             </div>
         </div>
     );
