@@ -17,6 +17,15 @@ const Header = () => {
         setShowMenu(false);
     };
 
+    const logout = () => {
+		// clear cookie
+		document.cookie =
+			'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+		// redirect to login
+		window.location.href = '/';
+	};
+
     return (
         <>
             <div className="header w-100 mt-4">
@@ -57,8 +66,11 @@ const Header = () => {
                                     <Link className="nav-link" to="/exercises" onClick={closeMenu}>
                                         Exercises
                                     </Link>
-                                    <Link className="nav-link" to="/login" onClick={closeMenu}>
+                              {/*    <Link className="nav-link" to="/login" onClick={closeMenu}>
                                         Log in
+                            </Link> */}
+                                    <Link className="nav-link" onClick={logout}>
+                                        Log out
                                     </Link>
                                 </Nav>
                             </Offcanvas.Body>
