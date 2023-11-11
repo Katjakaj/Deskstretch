@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import Header from "./components/Header";
-import Timer from "./components/Timer";
-import Exercises from "./components/Exercises";
-import Login from "./components/login/Login";
-import Footer from "./components/Footer";
-import SignUp from "./components/login/SignUp";
-import ForgotPw from "./components/login/ForgotPw";
+import Timer from "./pages/Timer";
+import Exercises from "./pages/Exercises";
 import { config } from "./utils/config";
 import Home from "./pages/Home";
 
@@ -26,30 +21,32 @@ const App = () => {
             },
             credentials: "include",
           });
-          if (response.status === 200) {
-            setValidate(true);
-          } else {
+          if (!response.status === 200) {
             setValidate(false);
             navigate("/");
+          } else {
+            setValidate(true);
           }
         } catch (err) {
+          setValidate(false);
+          navigate("/");
           console.log(err);
         }
       };
   
       fetchData();
     }, [navigate]);
+    
     return (
         <>
-            <Header />
+          
             <Routes>
-                <Route path="/" element={<Home />}></Route>
                 {validate ? (
                     <>
-                <Route path="/timer" element={<Timer />}></Route>
-                <Route path="/exercises" element={<Exercises />}></Route>
+                <Route path="/timer" element={<Timer />} />
+                <Route path="/exercises" element={<Exercises />} />
                 </>
-                ) : <Route path="/bajs" element={<Navigate to="/bajs" />} />}
+                ) : <Route path="/" element={<Home />} />}
             </Routes>
         </>
     );
