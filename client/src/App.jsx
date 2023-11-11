@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import {Routes, Route, useNavigate } from 'react-router-dom';
 import Timer from "./pages/Timer";
 import Exercises from "./pages/Exercises";
 import { config } from "./utils/config";
@@ -39,16 +39,15 @@ const App = () => {
     
     return (
         <>
-          <Router>
-            <Routes>
-                {validate ? (
-                    <>
-                <Route path="/timer" element={<Timer />} />
-                <Route path="/exercises" element={<Exercises />} />
-                </>
-                ) : <Route path="/" element={<Home />} />}
+    <Routes>
+    <Route path="/" element={<Home />} />
+      {validate ? ( 
+      <>
+        <Route path="/exercises" element={<Exercises />} />
+              <Route path="/timer" element={<Timer />} />
+      </>
+      ) :    null}
             </Routes>
-            </Router>
         </>
     );
 };

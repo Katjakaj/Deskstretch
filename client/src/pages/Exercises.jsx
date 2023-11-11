@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import data from "../data/exercises";
 import Header from "../components/Header";
+import { config } from "../utils/config";
+
+const apiUrl = config.API_BASE_URL;
 
 const Exercises = ({ onClose }) => {
     const [showPopup, setShowPopup] = useState(false);
@@ -30,6 +33,11 @@ const Exercises = ({ onClose }) => {
         const updatedExercises = exercises.filter((_, index) => index !== indexToRemove);
         setExercises(updatedExercises);
     };
+
+
+
+
+
 
     return (
         <>

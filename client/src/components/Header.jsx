@@ -44,7 +44,7 @@ const Header = () => {
                                     className={showMenu ? "navbar-toggler white" : "navbar-toggler"}
                                 >
                                     <div className="menu-container">
-                                        <a className="text-white menu-text">Menu</a>
+                                        <span className="text-white menu-text">Menu</span>
                                     </div>
                                 </Navbar.Toggle>
                             </div>
