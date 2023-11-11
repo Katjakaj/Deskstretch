@@ -57,7 +57,7 @@ const SignUp = () => {
                             />
                             {error && <p className="text-danger mt-4">{error}</p>}
                             <div className="d-flex w-100 justify-content-end text-white mt-4">
-                                <Link className="btn-password text-white" to="/login">
+                                <Link className="btn-password text-white" to="/">
                                     Already a user?
                                 </Link>
                             </div>

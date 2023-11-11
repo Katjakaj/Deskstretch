@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from "./components/Header";
 import Timer from "./components/Timer";
 import Exercises from "./components/Exercises";
@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import SignUp from "./components/login/SignUp";
 import ForgotPw from "./components/login/ForgotPw";
 import { config } from "./utils/config";
+import Home from "./pages/Home";
 
 const apiUrl = config.API_BASE_URL;
 
@@ -42,15 +43,13 @@ const App = () => {
         <>
             <Header />
             <Routes>
-                <Route path="/" element={<Login />}></Route>
+                <Route path="/" element={<Home />}></Route>
                 {validate ? (
                     <>
                 <Route path="/timer" element={<Timer />}></Route>
                 <Route path="/exercises" element={<Exercises />}></Route>
-                <Route path="/signup" element={<SignUp />}></Route>
-                <Route path="/forgot-password" element={<ForgotPw />}></Route>
                 </>
-                ) : null}
+                ) : <Route path="/bajs" element={<Navigate to="/bajs" />} />}
             </Routes>
         </>
     );

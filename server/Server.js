@@ -9,6 +9,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { auth } from './src/routes/Auth.routes.js';
+import { checkAuth } from './src/middlewares/CheckAuth.middlewares.js';
+
 
 dotenv.config()
 
