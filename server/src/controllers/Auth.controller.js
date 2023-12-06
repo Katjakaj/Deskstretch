@@ -53,6 +53,17 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Wrong password" });
         }
 
+        // Create a token
+        const token = jwt.sign(
+            { id: user._id, email: user.email },
+            process.env.TOKEN_KEY,
+            { expiresIn: "1h" }
+        );
+
+        // Send the token in a HTTP-only cookie
+        res.cookie("access_token", token, {
+        });
+
         // If both email and password are correct, you can consider it a successful login
         res.status(200).json({ message: "Login successful" });
     } catch (err) {
@@ -60,26 +71,32 @@ export const login = async (req, res) => {
     }
 };
 
-export const logout = (req, res) => {
-    res.clearCookie("access_token");
-    res.status(200).json("Logout success");
-  };
+// export const logout = (req, res) => {
+//     res.clearCookie("access_token");
+//     console.log("Cookie cleared");
+//     res.status(200).json("Logout success");
+// };
+
   
   export const validate = (req, res) => {
     const token = req.cookies.access_token;
+  
     if (!token) {
-      return res.status(401).json("No token found");
+      return res.redirect(401, "/");
     }
   
     jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
       if (err) {
-        return res.status(403).json("Invalid Token");
+        console.error("Token verification failed:", err);
+        return res.redirect(403, "/");
       }
+  
       req.user = {
         id: payload.id,
       };
       res.status(200).json("Token validated");
     });
   };
+  
 
 
