@@ -26,7 +26,7 @@ const SignUp = () => {
             const data = await response;
             console.log(data);
             if (data.status === 201) {
-                navigate("/login");
+                navigate("/");
             } else {
                 setError("Email/username is already registered");
             }

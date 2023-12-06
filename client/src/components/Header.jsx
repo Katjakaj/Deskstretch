@@ -17,14 +17,11 @@ const Header = () => {
         setShowMenu(false);
     };
 
-    const logout = () => {
-		// clear cookie
-		document.cookie =
-			'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-		// redirect to login
-		window.location.href = '/';
-	};
+    const handleLogout = () => {
+        console.log("Logging out...");
+        document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = "/";
+    };
 
     return (
         <>
@@ -66,10 +63,10 @@ const Header = () => {
                                     <Link className="nav-link" to="/exercises" onClick={closeMenu}>
                                         Exercises
                                     </Link>
-                              {/*    <Link className="nav-link" to="/login" onClick={closeMenu}>
+                                    <Link className="nav-link" to="/login" onClick={closeMenu}>
                                         Log in
-                            </Link> */}
-                                    <Link className="nav-link" onClick={logout}>
+                                    </Link>
+                                    <Link className="nav-link" to="/" onClick={handleLogout}>
                                         Log out
                                     </Link>
                                 </Nav>

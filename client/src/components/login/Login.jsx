@@ -68,7 +68,7 @@ const Login = () => {
                                     Log in
                                 </button>
                             </div>
-                            <Link className="btn d-flex w-100 justify-content-center text-white" to="/SignUp">
+                            <Link className="btn d-flex w-100 justify-content-center text-white" to="/signup">
                                 Sign up
                             </Link>
                         </div>
