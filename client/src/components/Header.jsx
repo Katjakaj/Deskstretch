@@ -63,9 +63,6 @@ const Header = () => {
                                     <Link className="nav-link" to="/exercises" onClick={closeMenu}>
                                         Exercises
                                     </Link>
-                                    <Link className="nav-link" to="/login" onClick={closeMenu}>
-                                        Log in
-                                    </Link>
                                     <Link className="nav-link" to="/" onClick={handleLogout}>
                                         Log out
                                     </Link>

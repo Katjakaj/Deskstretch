@@ -39,8 +39,8 @@ const Login = () => {
     return (
         <div className="login d-flex justify-content-center align-items-center">
             <div className="container">
-                <div className="row">
-                    <div className="col-12">
+                <div className="row justify-content-center">
+                    <div className="col-12 col-xl-4 col-md-8">
                         <div className="login-container px-5">
                             <h5 className="text-center mb-4">Log in</h5>
                             <input

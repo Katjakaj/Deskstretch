@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import data from "../data/exercises";
 import Header from "../components/Header";
 import { config } from "../utils/config";
 
@@ -7,80 +6,110 @@ const apiUrl = config.API_BASE_URL;
 
 const Exercises = ({ onClose }) => {
     const [showPopup, setShowPopup] = useState(false);
-    const [exercises, setExercises] = useState(data);
-    const [newExercise, setNewExercise] = useState({ name: "", desc: "" });
+    const [exercises, setExercises] = useState([]);
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
+
+    const handleAddExercise = async () => {
+        try {
+            const response = await fetch(`${apiUrl}exercises/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ title, desc }),
+            });
+
+            if (response.ok) {
+                // Exercise added successfully, update the exercises state
+                const newExercise = await response.json();
+                setExercises([...exercises, newExercise]);
+                setTitle("");
+                setDesc("");
+            } else {
+                // Log the error details for debugging
+                const errorData = await response.json();
+                console.error("Error:", errorData);
+            }
+        } catch (error) {
+            // Log any unexpected errors
+            console.error(error);
+        }
+    };
+
+    const handleRemoveExercise = async (id) => {
+        try {
+            const response = await fetch(`${apiUrl}exercises/:id${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+
+            if (response.status === 200) {
+                // Exercise removed successfully, update the exercises state
+                setExercises(exercises.filter((exercise) => exercise.id !== id));
+            } else {
+                console.log("error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleClose = () => {
         setShowPopup(false);
         onClose();
     };
 
-    const addExercise = () => {
-        // Check if both name and desc are provided
-        if (newExercise.name && newExercise.desc) {
-            // Create a copy of the newExercise object
-            const exerciseToAdd = { ...newExercise };
-
-            // Add the exercise to the exercises array
-            setExercises([exerciseToAdd, ...exercises]);
-
-            // Clear the input fields after adding the exercise
-            setNewExercise({ name: "", desc: "" });
-        }
-    };
-
-    const removeExercise = (indexToRemove) => {
-        const updatedExercises = exercises.filter((_, index) => index !== indexToRemove);
-        setExercises(updatedExercises);
-    };
-
-
-
-
-
-
     return (
         <>
-          <Header />
-        <div className="exercise-container">
-            <h1 className="text-center mt-3 mb-4">Exercises</h1>
+            <Header />
+            <div className="exercise-container">
+                <div className="row justify-content-center">
+                    <div className="col-12 col-xl-4 col-md-8">
+                        <h1 className="text-center mt-3 mb-4">Exercises</h1>
 
-            <div className="add-exercise p-3">
-                <h6 className="py-2">Add exercise</h6>
-                <input
-                    className="input-field"
-                    type="text"
-                    value={newExercise.name}
-                    onChange={(e) => setNewExercise({ ...newExercise, name: e.target.value })}
-                    placeholder="Name"
-                />
-                <input
-                    className="input-field input-desc"
-                    type="textarea"
-                    value={newExercise.desc}
-                    onChange={(e) => setNewExercise({ ...newExercise, desc: e.target.value })}
-                    placeholder="Description"
-                />
-                <div className="mt-3 text-center py-3 w-100">
-                    <a className="btn-add d-flex w-100 justify-content-center" onClick={addExercise}>
-                        Add
-                    </a>
+                        <div className="add-exercise p-3">
+                            <h6 className="py-2">Add exercise</h6>
+                            <input
+                                className="input-field"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Name"
+                            />
+                            <input
+                                className="input-field input-desc"
+                                type="textarea"
+                                value={desc}
+                                onChange={(e) => setDesc(e.target.value)}
+                                placeholder="Description"
+                            />
+                            <div className="mt-3 text-center py-3 w-100">
+                                <a className="btn-add d-flex w-100 justify-content-center" onClick={handleAddExercise}>
+                                    Add
+                                </a>
+                            </div>
+                        </div>
+
+                        {exercises.map((exercise) => (
+                            <div className="exercise-card my-3" key={exercise.id}>
+                                <div>
+                                    <h5>{exercise.title}</h5>
+                                </div>
+                                <div>{exercise.desc}</div>
+                                <div className="text-end mt-3">
+                                    <a className="btn-remove" onClick={() => handleRemoveExercise(exercise.id)}>
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-            {exercises.map((exercise, index) => (
-                <div className="exercise-card my-3" key={index}>
-                    <div>
-                        <h5>{exercise.name}</h5>
-                    </div>
-                    <div>{exercise.desc}</div>
-                    <div className="text-end mt-3">
-                        <a className="btn-remove" onClick={() => removeExercise(index)}>
-                            Remove
-                        </a>
-                    </div>
-                </div>
-            ))}
-        </div>
         </>
     );
 };

@@ -7,8 +7,6 @@ router.post('/signup', signup);
 
 router.post('/login', login);
 
-// router.get('/logout', logout);
-
 router.get('/validate', validate);
 
 const auth = router;
