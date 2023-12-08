@@ -38,9 +38,28 @@ const Exercises = ({ onClose }) => {
         }
     };
 
+    const handleDisplayExercises = async (id) => {
+        try {
+            const response = await fetch(`${apiUrl}exercises/user/${id}`);
+
+            if (response.ok) {
+                const responseData = await response.json();
+                const userExercises = responseData.exercises;
+                const userId = responseData.userId;
+
+                setExercises(userExercises);
+            } else {
+                const errorData = await response.json();
+                console.error("Error:", errorData);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const handleRemoveExercise = async (id) => {
         try {
-            const response = await fetch(`${apiUrl}exercises/:id${id}`, {
+            const response = await fetch(`${apiUrl}exercises/user/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -63,6 +82,13 @@ const Exercises = ({ onClose }) => {
         setShowPopup(false);
         onClose();
     };
+
+    useEffect(() => {
+        // Fetch user exercises when the component mounts
+        handleDisplayExercises();
+    }, []); // The empty dependency array ensures this runs only once when the component mounts
+
+    console.log(exercises);
 
     return (
         <>

@@ -24,6 +24,7 @@ export const signup = async (req, res) => {
             }
 
             await newUser.save();
+            
             res.status(201).json("New User Created");
             console.log('USERSKAPAD BACKEND')
         } else {
