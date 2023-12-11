@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
-import data from "../data/exercises";
+import { Modal } from "react-bootstrap";
 
-const Popup = ({ onClose }) => {
+const Popup = ({ onClose, exercises }) => {
     const [showPopup, setShowPopup] = useState(true);
 
-    const exercises = data;
     const randomExerciseIndex = Math.floor(Math.random() * exercises.length);
     const randomExercise = exercises[randomExerciseIndex];
 
@@ -18,7 +16,7 @@ const Popup = ({ onClose }) => {
         <Modal show={showPopup} centered>
             <div className="modal-content">
                 <div className="modal-header">
-                    <Modal.Title>{randomExercise.name}</Modal.Title>
+                    <Modal.Title>{randomExercise.title}</Modal.Title>
                     <span className="close red-close-button" onClick={handleClose}>
                         <span>&times;</span>
                     </span>

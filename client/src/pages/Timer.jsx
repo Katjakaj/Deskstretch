@@ -77,7 +77,7 @@ const Timer = () => {
     };
 
     const hourOptions = Array.from({ length: 24 }, (_, i) => i); // Generate options for hours (0-23)
-    const minuteOptions = Array.from({ length: 12 }, (_, i) => i * 5); // Generate options for minutes (0, 5, 10, 15, ..., 55)
+    const minuteOptions = Array.from({ length: 12 }, (_, i) => i * 0.5); // Generate options for minutes (0, 5, 10, 15, ..., 55)
 
     return (
         <>

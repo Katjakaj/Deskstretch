@@ -5,7 +5,7 @@ import { config } from "../utils/config";
 const apiUrl = config.API_BASE_URL;
 
 const Exercises = ({ onClose }) => {
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = useState(true);
     const [exercises, setExercises] = useState([]);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
