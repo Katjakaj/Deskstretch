@@ -5,11 +5,11 @@ const router = express.Router();
 
 router.post('/create', createExercise);
 
-router.get('/user/:id', getUserExercises);
+router.get('/user', getUserExercises);
 
 router.get('/all', getAllExercises);
 
-router.delete('/user/:id', deleteExercise);
+router.delete('/:id', deleteExercise);
 
 router.patch('/:id', updateExercise);
 

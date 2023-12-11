@@ -6,18 +6,19 @@ import mongoose from 'mongoose';
 
 export const createExercise = async (req, res) => {
     try {
-        const { title, desc } = req.body;
-
-        if (!title || !desc) {
-            res.status(400).send("Title and description are required");
-            return;
-        }
 
         // Check cookie for userId
         const token = req.cookies.access_token;
 
         if (!token) {
             return res.status(401).json("Invalid token/user");
+        }
+
+        const { title, desc } = req.body;
+
+        if (!title || !desc) {
+            res.status(400).send("Title and description are required");
+            return;
         }
 
         try {
@@ -53,32 +54,43 @@ export const createExercise = async (req, res) => {
     }
 };
 
-
-// Assuming that ExercisesModel is a Mongoose model
+// Get all exercises for a given user ID with access token in cookie (JWT)
 export const getUserExercises = async (req, res) => {
-    const { id } = req.params;
-
-    // Validate if 'id' is a valid MongoDB ObjectId
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ message: 'Invalid User ID', id });
-    }
-
     try {
-        const exercises = await ExercisesModel.find({ user: id });
 
-        // Check if exercises for the given user were found
-        if (exercises.length === 0) {
-            return res.status(404).json({ message: 'No exercises found for the user' });
+        const token = req.cookies.access_token;
+
+        if (!token) {
+            return res.status(401).json("Invalid token/user");
         }
 
-        // Send the user ID along with the exercises in the response
-        res.status(200).json({ userId: id, exercises });
+        try {
+            var payload = jwt.verify(token, process.env.TOKEN_KEY);
+            console.log("Payload:", payload);
+        } catch (err) {
+            return res.status(403).json("Invalid Token");
+        }
+        
+
+        const user = await User.findOne({ _id: payload.id });
+
+        if (!user) {
+            res.status(400).send("Invalid user");
+            return;
+        }
+
+        // Get all exercises for the user
+        const exercises = await ExercisesModel.find({ user: user._id });
+
+        res.status(200).json(exercises);
     } catch (error) {
-        // Handle specific errors and provide meaningful messages
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.log(error);
+        res.status(500).json({ message: "Server error", error: error });
     }
 };
+
+
+
 
 
 
@@ -92,15 +104,19 @@ export const getAllExercises = async (req, res) => {
     }
 }
 
+//delete exercise
 export const deleteExercise = async (req, res) => {
     const { id } = req.params;
-    try {
-        await ExercisesModel.findByIdAndDelete(id);
-        res.status(200).json({ message: "Exercise deleted successfully" });
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
+
+    console.log("Delete exercise with id:", id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No exercise with id: ${id}`);
+
+    await ExercisesModel.findByIdAndRemove(id);
+
+    res.json({ message: "Exercise deleted successfully." });
 }
+
 
 export const updateExercise = async (req, res) => {
     const { id } = req.params;

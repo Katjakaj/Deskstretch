@@ -36,6 +36,7 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+
     try {
         // Find the user by email
         const user = await UserModel.findOne({ email: req.body.email });
@@ -71,12 +72,6 @@ export const login = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
-// export const logout = (req, res) => {
-//     res.clearCookie("access_token");
-//     console.log("Cookie cleared");
-//     res.status(200).json("Logout success");
-// };
 
   
   export const validate = (req, res) => {
