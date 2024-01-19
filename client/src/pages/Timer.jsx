@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../scss/components/timer.scss";
 import Popup from "../components/Popup";
 import Header from "../components/Header";
+import Menu from "../components/Menu";
 
 const Timer = () => {
     const [time, setTime] = useState(10); // 5 minutes in seconds
@@ -77,12 +78,12 @@ const Timer = () => {
     };
 
     const hourOptions = Array.from({ length: 24 }, (_, i) => i); // Generate options for hours (0-23)
-    const minuteOptions = Array.from({ length: 12 }, (_, i) => i * 0.5); // Generate options for minutes (0, 5, 10, 15, ..., 55)
+    const minuteOptions = Array.from({ length: 12 }, (_, i) => i * 5); // Generate options for minutes (0, 5, 10, 15, ..., 55)
 
     return (
         <>
-            <Header />
             <div className="timer">
+                <Header />
                 <div className="timer-container container d-flex align-items-center justify-content-center">
                     <div className="row justify-content-center">
                         <div className="col-12 d-flex justify-content-center">
@@ -151,6 +152,7 @@ const Timer = () => {
                     {showPopup && isActive && <Popup onClose={handlePopupClose} />}
                 </div>
             </div>
+            <Menu />
         </>
     );
 };

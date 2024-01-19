@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { config } from "../utils/config";
+import Menu from "../components/Menu";
 
 const apiUrl = config.API_BASE_URL;
 
@@ -9,8 +10,7 @@ const Exercises = ({ onClose }) => {
     const [exercises, setExercises] = useState([]);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
-    const [userId, setCurrentUserId] = useState(null); // Add this state
-    const [userExercises, setUserExercises] = useState([]); // Add this state
+    const [defaultExercises, setDefaultExercises] = useState([]);
 
     const handleAddExercise = async () => {
         try {
@@ -69,6 +69,36 @@ const Exercises = ({ onClose }) => {
         }
     };
 
+    //Fetch Default exercises
+    const handleDisplayDefaultExercises = async () => {
+        try {
+            const response = await fetch(`${apiUrl}exercises/default`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                const defaultExercises = responseData;
+
+                setDefaultExercises(defaultExercises); // Set the state with the correct data
+            } else {
+                // Handle non-successful response
+                const errorData = await response.json();
+                console.error("Error:", errorData);
+                // Set an error state or display an error message
+            }
+        } catch (error) {
+            // Handle fetch or other errors
+            console.error(error);
+            // Set an error state or display an error message
+        }
+    };
+
+    console.log(defaultExercises);
+
     //remove user exercise from database and update state with exercise id
     const handleRemoveExercise = async (id) => {
         try {
@@ -104,18 +134,34 @@ const Exercises = ({ onClose }) => {
     useEffect(() => {
         // Fetch user exercises when the component mounts
         handleDisplayExercises();
+        handleDisplayDefaultExercises();
     }, []); // The empty dependency array ensures this runs only once when the component mounts
 
     return (
         <>
-            <Header />
             <div className="exercise-container">
+                <Header />
                 <div className="row justify-content-center">
                     <div className="col-12 col-xl-4 col-md-8">
                         <h1 className="text-center mt-3 mb-4">Exercises</h1>
 
+                        <div className="mt-5">
+                            <div className="exercise-card my-3">
+                                <h6>Add default exercises</h6>
+                                <div className="text-end mt-3">
+                                    <select className="exercise-dropdown">
+                                        {defaultExercises.map((exercise) => (
+                                            <option key={exercise.id} value={exercise.id}>
+                                                {exercise.title}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="add-exercise p-3">
-                            <h6 className="py-2">Add exercise</h6>
+                            <h6 className="py-2">Add your own exercises</h6>
                             <input
                                 className="input-field"
                                 value={title}
@@ -135,27 +181,34 @@ const Exercises = ({ onClose }) => {
                                 </a>
                             </div>
                         </div>
-                        {exercises.map((exercise) => (
-                            <div className="exercise-card my-3" key={exercise.id}>
-                                <div>
-                                    <h5>{exercise.title}</h5>
-                                </div>
-                                <div>{exercise.desc}</div>
-                                <div className="text-end mt-3">
-                                    <a
-                                        className="btn-remove"
-                                        onClick={() => {
-                                            handleRemoveExercise(exercise._id);
-                                        }}
-                                    >
-                                        Remove
-                                    </a>
-                                </div>
-                            </div>
-                        ))}
+                        <div className="mt-5">
+                            <h5 className="text-center">My exercises </h5>
+                            {exercises
+                                .slice()
+                                .reverse()
+                                .map((exercise) => (
+                                    <div className="exercise-card my-3" key={exercise.id}>
+                                        <div>
+                                            <h5>{exercise.title}</h5>
+                                        </div>
+                                        <div>{exercise.desc}</div>
+                                        <div className="text-end mt-3">
+                                            <a
+                                                className="btn-remove"
+                                                onClick={() => {
+                                                    handleRemoveExercise(exercise._id);
+                                                }}
+                                            >
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
                     </div>
                 </div>
             </div>
+            <Menu />
         </>
     );
 };

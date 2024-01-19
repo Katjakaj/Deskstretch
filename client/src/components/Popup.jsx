@@ -1,11 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
+import { config } from "../utils/config";
 
-const Popup = ({ onClose, exercises }) => {
+const apiUrl = config.API_BASE_URL;
+
+const Popup = ({ onClose }) => {
     const [showPopup, setShowPopup] = useState(true);
+    const [randomExercise, setRandomExercise] = useState({});
+    const [exercises, setExercises] = useState([]);
 
-    const randomExerciseIndex = Math.floor(Math.random() * exercises.length);
-    const randomExercise = exercises[randomExerciseIndex];
+    // Fetch user exercises from the database and set state with the data
+    const handleDisplayExercises = async () => {
+        try {
+            const response = await fetch(`${apiUrl}exercises/user`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include", // Include cookies
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                setExercises(responseData); // Set the state with the correct data
+
+                // Select a random exercise from the fetched data
+                const randomIndex = Math.floor(Math.random() * responseData.length);
+                setRandomExercise(responseData[randomIndex]);
+            } else {
+                // Handle non-successful response
+                console.log("Error in fetch exercises");
+            }
+        } catch (error) {
+            // Log any unexpected errors
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch user exercises when the component mounts
+        handleDisplayExercises();
+    }, []); // The empty dependency array ensures this runs only once when the component mounts
 
     const handleClose = () => {
         setShowPopup(false);

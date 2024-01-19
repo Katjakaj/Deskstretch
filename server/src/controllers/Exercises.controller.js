@@ -1,4 +1,5 @@
 import ExercisesModel from "../models/Exercises.model.js";
+import DefaultExercisesModel from "../models/Defaultexercises.model.js";
 import jwt from 'jsonwebtoken';
 import User from '../models/User.model.js';
 import mongoose from 'mongoose';
@@ -89,11 +90,6 @@ export const getUserExercises = async (req, res) => {
     }
 };
 
-
-
-
-
-
 //get all exercises
 export const getAllExercises = async (req, res) => {
     try {
@@ -129,4 +125,14 @@ export const updateExercise = async (req, res) => {
     await ExercisesModel.findByIdAndUpdate(id, updatedExercise, { new: true });
 
     res.json(updatedExercise);
+}
+
+export const getDefaultExercises = async (req, res) => {
+    try {
+        const exercises = await DefaultExercisesModel.find();
+        res.status(200).json(exercises);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error", message: error.message });
+    }
 }
