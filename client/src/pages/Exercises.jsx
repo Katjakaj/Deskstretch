@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { config } from "../utils/config";
 import Menu from "../components/Menu";
+import plusIcon from "../img/plus.svg";
 
 const apiUrl = config.API_BASE_URL;
 
@@ -11,6 +12,7 @@ const Exercises = ({ onClose }) => {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [defaultExercises, setDefaultExercises] = useState([]);
+    const [selectedDefaultExercise, setSelectedDefaultExercise] = useState();
 
     const handleAddExercise = async () => {
         try {
@@ -36,6 +38,21 @@ const Exercises = ({ onClose }) => {
             }
         } catch (error) {
             // Log any unexpected errors
+            console.error(error);
+        }
+    };
+    const handleAddDefaultExercise = async () => {
+        try {
+            if (selectedDefaultExercise) {
+                // Add selected default exercise to user exercises
+                setExercises([...exercises, selectedDefaultExercise]);
+
+                // Reset selected default exercise
+                setSelectedDefaultExercise(null);
+            } else {
+                console.error("No default exercise selected.");
+            }
+        } catch (error) {
             console.error(error);
         }
     };
@@ -81,19 +98,13 @@ const Exercises = ({ onClose }) => {
 
             if (response.ok) {
                 const responseData = await response.json();
-                const defaultExercises = responseData;
-
-                setDefaultExercises(defaultExercises); // Set the state with the correct data
+                setDefaultExercises(responseData);
             } else {
-                // Handle non-successful response
                 const errorData = await response.json();
                 console.error("Error:", errorData);
-                // Set an error state or display an error message
             }
         } catch (error) {
-            // Handle fetch or other errors
             console.error(error);
-            // Set an error state or display an error message
         }
     };
 
@@ -131,11 +142,54 @@ const Exercises = ({ onClose }) => {
         onClose();
     };
 
+    const handleSelectDefaultExercise = async (event) => {
+        const selectedId = event.target.value;
+        console.log("Selected ID:", selectedId);
+
+        const selectedExercise = defaultExercises.find((exercise) => exercise._id === selectedId);
+
+        console.log("Selected Exercise:", selectedExercise);
+
+        if (selectedExercise) {
+            try {
+                const response = await fetch(`${apiUrl}exercises/create`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ title: selectedExercise.title, desc: selectedExercise.desc }),
+                });
+
+                if (response.ok) {
+                    // Exercise added successfully, update the exercises state
+                    const newExercise = await response.json();
+                    setExercises([...exercises, newExercise]);
+                } else {
+                    // Log the error details for debugging
+                    const errorData = await response.json();
+                    console.error("Error:", errorData);
+                }
+            } catch (error) {
+                // Handle errors...
+                console.error(error);
+            }
+        } else {
+            console.error("No default exercise selected.");
+        }
+    };
+
+    console.log(selectedDefaultExercise);
+
     useEffect(() => {
-        // Fetch user exercises when the component mounts
+        // Reset selected default exercise when component mounts
+        setSelectedDefaultExercise(null);
+        // Fetch user exercises and default exercises
         handleDisplayExercises();
         handleDisplayDefaultExercises();
-    }, []); // The empty dependency array ensures this runs only once when the component mounts
+    }, []);
+
+    console.log(defaultExercises);
 
     return (
         <>
@@ -144,22 +198,6 @@ const Exercises = ({ onClose }) => {
                 <div className="row justify-content-center">
                     <div className="col-12 col-xl-4 col-md-8">
                         <h1 className="text-center mt-3 mb-4">Exercises</h1>
-
-                        <div className="mt-5">
-                            <div className="exercise-card my-3">
-                                <h6>Add default exercises</h6>
-                                <div className="text-end mt-3">
-                                    <select className="exercise-dropdown">
-                                        {defaultExercises.map((exercise) => (
-                                            <option key={exercise.id} value={exercise.id}>
-                                                {exercise.title}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
                         <div className="add-exercise p-3">
                             <h6 className="py-2">Add your own exercises</h6>
                             <input
@@ -179,6 +217,33 @@ const Exercises = ({ onClose }) => {
                                 <a className="btn-add d-flex w-100 justify-content-center" onClick={handleAddExercise}>
                                     Add
                                 </a>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="exercise-card my-3">
+                                <h6>Select and Add default exercise</h6>
+                                <div className="text-center mt-3">
+                                    <select
+                                        className="exercise-dropdown"
+                                        onChange={handleSelectDefaultExercise}
+                                        multiple
+                                    >
+                                        {defaultExercises.map((exercise) => (
+                                            <option key={exercise._id} value={exercise._id}>
+                                                {exercise.title}
+                                                <span style={{ fontSize: "1rem" }}>+</span>
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {selectedDefaultExercise && (
+                                    <div className="selected-exercise-details mt-3">
+                                        <div>
+                                            <h5>{selectedDefaultExercise.title}</h5>
+                                        </div>
+                                        <div>{selectedDefaultExercise.desc}</div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="mt-5">
