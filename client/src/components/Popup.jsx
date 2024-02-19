@@ -27,6 +27,9 @@ const Popup = ({ onClose }) => {
                 // Select a random exercise from the fetched data
                 const randomIndex = Math.floor(Math.random() * responseData.length);
                 setRandomExercise(responseData[randomIndex]);
+
+                // Play sound
+                playSound();
             } else {
                 // Handle non-successful response
                 console.log("Error in fetch exercises");
@@ -45,6 +48,11 @@ const Popup = ({ onClose }) => {
     const handleClose = () => {
         setShowPopup(false);
         onClose();
+    };
+
+    const playSound = () => {
+        const sound = new Audio("/alarm.mp3"); // Assuming the sound file is directly inside the "public" directory
+        sound.play();
     };
 
     return (

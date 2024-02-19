@@ -56,6 +56,11 @@
         background-color: transparent;
         border: none;
         display: flex;
+        width: 100%;
+
+        &:focus-visible {
+            outline: none;
+        }
 
         option {
             background-color: $primary;
@@ -65,6 +70,10 @@
             border: 1px solid $background;
             margin-bottom: 5px;
             border-radius: 5rem;
+
+            &:focus {
+                background-color: $primary;
+            }
         }
     }
 }

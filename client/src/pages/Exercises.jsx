@@ -221,7 +221,7 @@ const Exercises = ({ onClose }) => {
                         </div>
                         <div className="">
                             <div className="exercise-card my-3">
-                                <h6>Select and Add default exercise</h6>
+                                <h6>Add default exercise</h6>
                                 <div className="text-center mt-3">
                                     <select
                                         className="exercise-dropdown"
@@ -229,9 +229,12 @@ const Exercises = ({ onClose }) => {
                                         multiple
                                     >
                                         {defaultExercises.map((exercise) => (
-                                            <option key={exercise._id} value={exercise._id}>
-                                                {exercise.title}
-                                                <span style={{ fontSize: "1rem" }}>+</span>
+                                            <option
+                                                key={exercise._id}
+                                                value={exercise._id}
+                                                style={{ display: "flex", justifyContent: "space-between" }}
+                                            >
+                                                <span>{exercise.title}</span>
                                             </option>
                                         ))}
                                     </select>
