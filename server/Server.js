@@ -23,6 +23,7 @@ const corsOptions = {
 		'http://104.142.122.231',
 		'http://192.168.1.26:3000',
 		'https://deskstretch-client.onrender.com',
+		'*',
 	  ],
 	credentials: true,
 	exposedHeaders: ['set-cookie'],
