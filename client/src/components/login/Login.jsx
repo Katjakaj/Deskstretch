@@ -41,7 +41,7 @@ const Login = () => {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-xl-4 col-md-8">
-                        <div className="login-container px-5">
+                        <div className="px-5">
                             <h5 className="text-center mb-4">Log in</h5>
                             <input
                                 className="input-field mb-2"
@@ -68,9 +68,6 @@ const Login = () => {
                                     Log in
                                 </button>
                             </div>
-                            <Link className="btn d-flex w-100 justify-content-center text-white" to="/signup">
-                                Sign up
-                            </Link>
                         </div>
                     </div>
                 </div>

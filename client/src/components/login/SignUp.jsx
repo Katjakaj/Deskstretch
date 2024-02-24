@@ -40,7 +40,7 @@ const SignUp = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        <div className="login-container px-5">
+                        <div className="px-5">
                             <h5 className="text-center mb-4">Sign up</h5>
                             <input
                                 className="input-field mb-2"
@@ -56,7 +56,7 @@ const SignUp = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {error && <p className="text-danger mt-4">{error}</p>}
-                            <div className="d-flex w-100 justify-content-end text-white mt-4">
+                           <div className="d-flex w-100 justify-content-end text-white mt-4">
                                 <Link className="btn-password text-white" to="/">
                                     Already a user?
                                 </Link>
