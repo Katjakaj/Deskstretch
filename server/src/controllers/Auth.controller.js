@@ -67,32 +67,30 @@ export const login = async (req, res) => {
         // });
 
         // If both email and password are correct, you can consider it a successful login
-        res.status(200).cookie("access_token", token, { maxAge: 3600000 }).json({ message: "Login successful" });
+        res.cookie("access_token", token, { maxAge: 3600000, httpOnly: true, secure: true, sameSite: 'strict' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
   
-  export const validate = (req, res) => {
+export const validate = (req, res) => {
     const token = req.cookies.access_token;
-  
-    if (!token) {
-      return res.redirect(401, "/");
-    }
-  
-    jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
-      if (err) {
-        console.error("Token verification failed:", err);
-        return res.redirect(403, "/");
-      }
-  
-      req.user = {
-        id: payload.id,
-      };
-      res.status(200).json("Token validated");
-    });
-  };
-  
 
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized - No token found" });
+    }
+
+    jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
+        if (err) {
+            console.error("Token verification failed:", err);
+            return res.status(403).json({ message: "Forbidden - Token verification failed" });
+        }
+
+        req.user = {
+            id: payload.id,
+        };
+        res.status(200).json({ message: "Token validated" });
+    });
+};
 
