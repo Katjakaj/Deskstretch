@@ -67,7 +67,7 @@ export const login = async (req, res) => {
         // });
 
         // If both email and password are correct, you can consider it a successful login
-        res.status(200).cookie("access_token", token, { maxAge: 3600000 }).json({ message: "Login successful" });
+        res.cookie("access_token", token, { maxAge: 3600000, httpOnly: true, secure: true });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
