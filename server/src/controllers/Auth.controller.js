@@ -64,8 +64,10 @@ export const login = async (req, res) => {
 
         res.cookie("access_token", token, {
           httpOnly: true,
-          domain: '.onrender.com', // Gör cookien giltig för alla subdomäner
+          domain: '.onrender.com',
+          secure: true, // Krävs för att cookien bara ska skickas över HTTPS
         });
+        
         
         // If both email and password are correct, you can consider it a successful login
         res.status(200).json({ message: "Login successful" });
