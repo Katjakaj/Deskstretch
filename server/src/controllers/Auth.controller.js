@@ -63,13 +63,10 @@ export const login = async (req, res) => {
         );
 
         res.cookie("access_token", token, {
-            domain: ".onrender.com", // Allow cookies to be sent to subdomains
-            path: "/",               // Specify the root path
-            sameSite: "None",        // Allow cross-origin requests
-            secure: true,            // Require HTTPS for secure transmission
-            httpOnly: true            // Enhance security by preventing client-side access
-          });          
-
+          httpOnly: true,
+          domain: '.onrender.com', // Gör cookien giltig för alla subdomäner
+        });
+        
         // If both email and password are correct, you can consider it a successful login
         res.status(200).json({ message: "Login successful" });
     } catch (err) {
