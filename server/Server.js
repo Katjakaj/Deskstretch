@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import UserRoutes from './src/routes/User.routes.js';
-import Config from './config/Config.js';
+import Config from './Config.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
