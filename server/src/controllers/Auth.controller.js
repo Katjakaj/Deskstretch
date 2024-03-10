@@ -64,8 +64,6 @@ export const login = async (req, res) => {
 
         res.cookie("access_token", token, {
           httpOnly: true,
-          domain: '.onrender.com',
-          secure: true, // Krävs för att cookien bara ska skickas över HTTPS
         });
         
         

@@ -22,7 +22,6 @@ const corsOptions = {
 		'http://127.0.0.1',
 		'http://104.142.122.231',
 		'http://192.168.1.26:3000',
-		'https://deskstretch-client.onrender.com',
 		'https://deskstretch-n945zhvxr-katjas-projects.vercel.app/',
 	  ],
 	credentials: true,
