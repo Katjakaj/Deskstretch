@@ -79,6 +79,8 @@ export const login = async (req, res) => {
   
   export const validate = (req, res) => {
     const token = req.cookies.access_token;
+
+    console.log(token);
   
     if (!token) {
       return res.redirect(401, "/");
