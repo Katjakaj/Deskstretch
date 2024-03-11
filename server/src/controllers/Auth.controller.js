@@ -66,7 +66,9 @@ export const login = async (req, res) => {
 
         res.cookie("access_token", token, {
           httpOnly: true,
-        });
+          sameSite: "None", // Set SameSite attribute
+          secure: true,     // Ensure cookie is sent only over HTTPS
+      });
         
         
         // If both email and password are correct, you can consider it a successful login
@@ -77,32 +79,25 @@ export const login = async (req, res) => {
 };
 
   
-export const validate = (req, res) => {
-  const token = req.cookies.access_token;
+  export const validate = (req, res) => {
+    const token = req.cookies.access_token;
 
-  if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
+    console.log(token);
+  
+    if (!token) {
+      return res.redirect(401, "/");
+    }
+  
+    jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
       if (err) {
-          console.error("Token verification failed:", err);
-          return res.status(403).json({ message: "Forbidden" });
+        console.error("Token verification failed:", err);
+        return res.redirect(403, "/");
       }
-
-      // If the token is valid, generate a new access token
-      const newToken = jwt.sign(
-          { id: payload.id },
-          process.env.TOKEN_KEY,
-          { expiresIn: "1h" }
-      );
-
-      // Set the new token in a cookie
-      res.cookie("access_token", newToken, {
-          httpOnly: true,
-      });
-
-      // Respond with the new token
-      res.status(200).json({ access_token: newToken });
-  });
-};
+  
+      req.user = {
+        id: payload.id,
+      };
+      res.status(200).json("Token validated");
+    });
+  };
+  
