@@ -17,15 +17,22 @@ const app = express();
 
 app.use(express.json());
 const corsOptions = {
-	origin: [
-		'http://localhost:3000',
-		'https://deskstretch.vercel.app',
-	  ],
+	origin: (origin, callback) => {
+	  if (
+		['http://localhost:3000', 'https://deskstretch.vercel.app'].includes(origin)
+	  ) {
+		callback(null, true);
+	  } else {
+		callback(new Error('Not allowed by CORS'));
+	  }
+	},
 	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	credentials: true,
 	exposedHeaders: ['set-cookie'],
-
-};
+  };
+  
+  app.use(cors(corsOptions));
+  
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
