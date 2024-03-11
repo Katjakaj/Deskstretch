@@ -16,7 +16,7 @@ const App = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`${apiUrl}auth/validate`, {
-                    method: "GET",
+                    method: "OPTIONS",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -35,6 +35,8 @@ const App = () => {
 
         fetchData();
     }, [navigate]);
+
+    console.log(validate);
 
     return (
         <>
