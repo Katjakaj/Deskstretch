@@ -19,13 +19,12 @@ app.use(express.json());
 const corsOptions = {
 	origin: [
 		'http://localhost:3000',
-		'http://127.0.0.1',
-		'http://104.142.122.231',
-		'http://192.168.1.26:3000',
 		'https://deskstretch.vercel.app',
 	  ],
+	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	credentials: true,
 	exposedHeaders: ['set-cookie'],
+
 };
 app.use(cors(corsOptions));
 
@@ -43,4 +42,3 @@ app.use('/exercises', exercises);
 
 Config.connectToDatabase();
 Config.connectToPort(app);
-
