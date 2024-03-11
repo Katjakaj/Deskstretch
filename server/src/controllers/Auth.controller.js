@@ -77,25 +77,32 @@ export const login = async (req, res) => {
 };
 
   
-  export const validate = (req, res) => {
-    const token = req.cookies.access_token;
+export const validate = (req, res) => {
+  const token = req.cookies.access_token;
 
-    console.log(token);
-  
-    if (!token) {
-      return res.redirect(401, "/");
-    }
-  
-    jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
+  if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
       if (err) {
-        console.error("Token verification failed:", err);
-        return res.redirect(403, "/");
+          console.error("Token verification failed:", err);
+          return res.status(403).json({ message: "Forbidden" });
       }
-  
-      req.user = {
-        id: payload.id,
-      };
-      res.status(200).json("Token validated");
-    });
-  };
-  
+
+      // If the token is valid, generate a new access token
+      const newToken = jwt.sign(
+          { id: payload.id },
+          process.env.TOKEN_KEY,
+          { expiresIn: "1h" }
+      );
+
+      // Set the new token in a cookie
+      res.cookie("access_token", newToken, {
+          httpOnly: true,
+      });
+
+      // Respond with the new token
+      res.status(200).json({ access_token: newToken });
+  });
+};

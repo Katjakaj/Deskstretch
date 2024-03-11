@@ -16,7 +16,7 @@ const App = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`${apiUrl}auth/validate`, {
-                    method: "OPTIONS",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
