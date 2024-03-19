@@ -82,7 +82,7 @@ const Timer = () => {
 
     return (
         <>
-            <div className="timer">
+            <div className="timer overflow-hidden">
                 <Header />
                 <div className="timer-container container d-flex align-items-center justify-content-center">
                     <div className="row justify-content-center">

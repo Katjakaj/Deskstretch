@@ -13,7 +13,7 @@ const handleLogout = () => {
 
 function Menu() {
     return (
-        <div>
+        
             <div className="menu">
                 <Nav className="d-flex justify-content-around">
                     <Link className="nav-link d-flex flex-column justify-content-center" to="/exercises">
@@ -30,7 +30,7 @@ function Menu() {
                     </Link>
                 </Nav>
             </div>
-        </div>
+        
     );
 }
 

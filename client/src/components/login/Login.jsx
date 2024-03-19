@@ -58,12 +58,12 @@ const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             ></input>
                             {error && <p className="text-danger mt-4">{error}</p>}
-                            <Link
+                            {/* <Link
                                 className="btn-password d-flex w-100 justify-content-end text-white mt-4"
                                 to="/forgot-password"
                             >
                                 Forgot password?
-                            </Link>
+                            </Link> */}
                             <div className="mt-3 text-center py-3 w-100">
                                 <button className="btn-login d-flex w-100 justify-content-center" onClick={fetchData}>
                                     Log in

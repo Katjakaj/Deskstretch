@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Modal } from "react-bootstrap";
 import { config } from "../utils/config";
 
@@ -8,6 +8,7 @@ const Popup = ({ onClose }) => {
     const [showPopup, setShowPopup] = useState(true);
     const [randomExercise, setRandomExercise] = useState({});
     const [exercises, setExercises] = useState([]);
+
 
     // Fetch user exercises from the database and set state with the data
     const handleDisplayExercises = async () => {
@@ -28,8 +29,6 @@ const Popup = ({ onClose }) => {
                 const randomIndex = Math.floor(Math.random() * responseData.length);
                 setRandomExercise(responseData[randomIndex]);
 
-                // Play sound
-                playSound();
             } else {
                 // Handle non-successful response
                 console.log("Error in fetch exercises");
@@ -40,19 +39,41 @@ const Popup = ({ onClose }) => {
         }
     };
 
-    useEffect(() => {
-        // Fetch user exercises when the component mounts
-        handleDisplayExercises();
-    }, []); // The empty dependency array ensures this runs only once when the component mounts
-
-    const handleClose = () => {
-        setShowPopup(false);
-        onClose();
-    };
+    const sound = useRef(null);
+    const soundPlayed = useRef(false);
 
     const playSound = () => {
-        const sound = new Audio("/alarm.mp3"); // Assuming the sound file is directly inside the "public" directory
-        sound.play();
+        sound.current = new Audio("/alarm.mp3");
+        sound.current.volume = 0.1;
+        sound.current.play();
+    }
+
+    const stopSound = () => {
+        if (sound.current) {
+            sound.current.pause();
+            sound.current.currentTime = 0; // Optional: Reset the sound to the start
+        }
+    }
+
+    useEffect(() => {
+        if (showPopup && !soundPlayed.current) {
+            playSound();
+            soundPlayed.current = true;
+        } else if (!showPopup) {
+            stopSound();
+            soundPlayed.current = false;
+        }
+    }, [showPopup]);
+
+    useEffect(() => {
+       
+        handleDisplayExercises();
+    }, []); 
+
+    const handleClose = () => {
+        stopSound();
+        setShowPopup(false);
+        onClose();
     };
 
     return (

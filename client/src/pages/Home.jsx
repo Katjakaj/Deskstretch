@@ -16,7 +16,7 @@ const Home = () => {
                 </div>
 
                 <div className="login-container">
-                {showSignUp ? <SignUp /> : <Login />}  {/* Use the variable to conditionally render */}
+                <Login />
             
                     {/* Add a button or link to toggle between Login and SignUp */}
                     <div className="text-center mt-2">
