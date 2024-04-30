@@ -29,14 +29,11 @@ const App = () => {
                 }
             } catch (err) {
                 setValidate(false);
-                console.log(err);
             }
         };
 
         fetchData();
     }, [navigate]);
-
-    console.log(validate);
 
     return (
         <>

@@ -108,7 +108,7 @@ export const deleteExercise = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No exercise with id: ${id}`);
 
-    // await ExercisesModel.findByIdAndRemove(id);
+    await ExercisesModel.findByIdAndDelete(id);
 
     res.json({ message: "Exercise deleted successfully." });
 }

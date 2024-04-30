@@ -25,7 +25,6 @@ const Login = () => {
             });
 
             if (response.status === 200) {
-                console.log(response);
                 navigate("/timer");
             } else {
                 // Handle other status codes here

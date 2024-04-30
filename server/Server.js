@@ -21,7 +21,6 @@ const corsOptions = {
 		'http://localhost:3000',
 		'https://deskstretch.vercel.app',
 	  ],
-	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE ,OPTIONS',
 	credentials: true,
 	exposedHeaders: ['set-cookie'],
 

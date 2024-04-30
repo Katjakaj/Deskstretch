@@ -34,7 +34,6 @@ const Exercises = ({ onClose }) => {
             } else {
                 // Log the error details for debugging
                 const errorData = await response.json();
-                console.error("Error:", errorData);
             }
         } catch (error) {
             // Log any unexpected errors
@@ -108,8 +107,6 @@ const Exercises = ({ onClose }) => {
         }
     };
 
-    console.log(defaultExercises);
-
     //remove user exercise from database and update state with exercise id
     const handleRemoveExercise = async (id) => {
         try {
@@ -144,11 +141,8 @@ const Exercises = ({ onClose }) => {
 
     const handleSelectDefaultExercise = async (event) => {
         const selectedId = event.target.value;
-        console.log("Selected ID:", selectedId);
 
         const selectedExercise = defaultExercises.find((exercise) => exercise._id === selectedId);
-
-        console.log("Selected Exercise:", selectedExercise);
 
         if (selectedExercise) {
             try {
@@ -179,8 +173,6 @@ const Exercises = ({ onClose }) => {
         }
     };
 
-    console.log(selectedDefaultExercise);
-
     useEffect(() => {
         // Reset selected default exercise when component mounts
         setSelectedDefaultExercise(null);
@@ -188,8 +180,6 @@ const Exercises = ({ onClose }) => {
         handleDisplayExercises();
         handleDisplayDefaultExercises();
     }, []);
-
-    console.log(defaultExercises);
 
     return (
         <>
@@ -226,6 +216,7 @@ const Exercises = ({ onClose }) => {
                                     <select
                                         className="exercise-dropdown"
                                         onChange={handleSelectDefaultExercise}
+                                        value={selectedDefaultExercise ? selectedDefaultExercise._id : ""}
                                         multiple
                                     >
                                         {defaultExercises.map((exercise) => (
@@ -255,7 +246,7 @@ const Exercises = ({ onClose }) => {
                                 .slice()
                                 .reverse()
                                 .map((exercise) => (
-                                    <div className="exercise-card my-3" key={exercise.id}>
+                                    <div className="exercise-card my-3" key={exercise._id}>
                                         <div>
                                             <h5>{exercise.title}</h5>
                                         </div>
