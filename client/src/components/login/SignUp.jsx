@@ -9,6 +9,7 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
 
     const fetchData = async () => {
         try {
@@ -26,7 +27,7 @@ const SignUp = () => {
             const data = await response;
             console.log(data);
             if (data.status === 201) {
-                navigate("/");
+                setMessage("Account created successfully");
             } else {
                 setError("Email/username is already registered");
             }
@@ -49,22 +50,30 @@ const SignUp = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <input
-                                className="input-field"
+                                className="input-field mb-2"
                                 placeholder="Password"
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+
+                            <input
+                                className="input-field mb-2"
+                                placeholder="Confirm Password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+
                             {error && <p className="text-danger mt-4">{error}</p>}
-                           <div className="d-flex w-100 justify-content-end text-white mt-4">
-                                <Link className="btn-password text-white" to="/">
-                                    Already a user?
-                                </Link>
-                            </div>
+    
                             <div className="mt-3 text-center py-3 w-100">
                                 <button className="btn-login d-flex w-100 justify-content-center" onClick={fetchData}>
                                     Sign up
                                 </button>
+                                {message && <p className="text-success mt-4 mb-0">{message}</p>}
+
+                                
                             </div>
                         </div>
                     </div>

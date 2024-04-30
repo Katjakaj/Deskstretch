@@ -10,13 +10,14 @@ const Home = () => {
     return (
         <>
         <div className="home d-flex align-items-center">
-            <div className="container">
+            <div className="container d-flex justify-content-center flex-column align-items-center">
                 <div className="text-center pb-4">
                     <img className="logo" src={logo} alt="Logo" />
                 </div>
 
                 <div className="login-container">
-                <Login />
+                
+                    {showSignUp ? <SignUp /> : <Login />}
             
                     {/* Add a button or link to toggle between Login and SignUp */}
                     <div className="text-center mt-2">

@@ -7,4 +7,9 @@
     border-radius: 10px;
     padding-top: 2.5rem;
     padding-bottom: 2rem;
+    width: 95%;
+
+    @include media-breakpoint-up(md) {
+        width: 25rem;
+    }
 }
